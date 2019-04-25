@@ -13,8 +13,8 @@ K.clear_session()
 model = load_model('model/model.h5')
 graph = tf.get_default_graph()
 
-word_to_idx = pickle.load(open('word_to_idx.p','rb'))
-idx_to_word = pickle.load(open('idx_to_word.p','rb'))
+word_to_idx = pickle.load(open('res/word_to_idx.p','rb'))
+idx_to_word = pickle.load(open('res/idx_to_word.p','rb'))
 
 def texts_to_sequences(text, word_to_index):
     text = text.strip().split()
