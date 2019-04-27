@@ -9,7 +9,7 @@ function predict(wak, method) {
                 document.getElementById(
                     'prediction'
                 ).innerHTML = this.responseText.message
-            } else {
+            } else if (this.responseText.status == 'error') {
                 alert(this.responseText.message)
             }
 
