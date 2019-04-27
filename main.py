@@ -9,6 +9,7 @@ from pythainlp.tokenize import word_tokenize
 import prediction
 
 app = Flask(__name__)
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 K.clear_session()
 model = load_model('model/model.h5')
