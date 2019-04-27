@@ -7,11 +7,11 @@ function predict(wak, method) {
                 .classList.remove('loader')
             console.log(this.responseText)
             if (this.responseText.status == 'ok') {
-                document.getElementById(
-                    'prediction'
-                ).innerHTML = this.responseText.message
+                document.getElementById('prediction').innerHTML = JSON.parse(
+                    this.responseText
+                ).message
             } else if (this.responseText.status == 'error') {
-                alert(this.responseText.message)
+                alert(JSON.parse(this.responseText).message)
             }
 
             document.getElementById('predict_btn').classList.remove('disabled')
