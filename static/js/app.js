@@ -5,7 +5,15 @@ function predict(wak, method) {
             document
                 .getElementById('prediction_wrapper')
                 .classList.remove('loader')
-            document.getElementById('prediction').innerHTML = this.responseText
+            if this.responseText.status == 'ok' {
+                document.getElementById(
+                    'prediction'
+                ).innerHTML = this.responseText.message
+            } else {
+                alert(this.responseText.message);
+            }
+                
+            
             document.getElementById('predict_btn').classList.remove('disabled')
             console.log(document.getElementById('word').value)
         }
