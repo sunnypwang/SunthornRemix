@@ -1,4 +1,4 @@
-function predict(wak, method) {
+function predict(method, style, wak) {
     var xhttp = new XMLHttpRequest()
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -23,10 +23,12 @@ function predict(wak, method) {
     url =
         'http://35.234.33.177:3000/predict?method=' +
         method +
-        '&tok=' +
-        document.getElementById('word').value +
+        '&style=' +
+        style +
         '&wak=' +
         wak +
+        '&tok=' +
+        document.getElementById('word').value +
         '&mobile=' +
         isMobile
     xhttp.open('GET', url, true)
@@ -40,9 +42,11 @@ document.getElementById('predict_btn').addEventListener(
         document.getElementById('prediction').innerHTML = null
         document.getElementById('prediction_wrapper').classList.add('loader')
 
-        wak = document.querySelector('input[name="wak"]:checked').value
         method = document.querySelector('input[name="method"]:checked').value
-        predict(wak, method)
+        style = document.querySelector('input[name="style"]:checked').value
+        wak = document.querySelector('input[name="wak"]:checked').value
+
+        predict(method, style, wak)
     },
     false
 )
