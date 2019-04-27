@@ -5,13 +5,12 @@ function predict(wak, method) {
             document
                 .getElementById('prediction_wrapper')
                 .classList.remove('loader')
-            console.log(this.responseText)
-            if (this.responseText.status == 'ok') {
-                document.getElementById('prediction').innerHTML = JSON.parse(
-                    this.responseText
-                ).message
-            } else if (this.responseText.status == 'error') {
-                alert(JSON.parse(this.responseText).message)
+            var res = JSON.parse(this.responseText)
+            console.log(res)
+            if (res.status == 'ok') {
+                document.getElementById('prediction').innerHTML = res.message
+            } else if (res.status == 'error') {
+                alert(res.message)
             }
 
             document.getElementById('predict_btn').classList.remove('disabled')
