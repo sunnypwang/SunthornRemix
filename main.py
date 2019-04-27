@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 
 import pickle
 from keras.models import load_model, Model
@@ -24,21 +24,28 @@ def index():
 
 @app.route('/predict')
 def _predict():
-    method =  request.args.get('method', default = 'greedy')
-    input_text = request.args.get('tok', default = '')
-    wak_limit = int(request.args.get('wak', default = '4'))
-    isMobile = (request.args.get('mobile', default = 'false')).lower() == 'true'
-    
-    word_tokens = ['<s>']
-    word_tokens.extend(word_tokenize(input_text))
-    
-    if method == 'greedy':
-         result_tokens = prediction.predict_greedy(word_tokens,in_x,graph,model,word_to_idx,idx_to_word,wak_limit)
-    elif method == 'beam':
-         result_tokens = prediction.beam_search_decode(word_tokens, in_x, graph, model, word_to_idx, idx_to_word, in_x, 10, wak_limit, normalized=True)
-    result = prediction.format_output(result_tokens,wak_limit,isMobile)      
-    print(isMobile, result)
-    return result
+     method =  request.args.get('method', default = 'greedy')
+     input_text = request.args.get('tok', default = '')
+     wak_limit = int(request.args.get('wak', default = '4'))
+     isMobile = (request.args.get('mobile', default = 'false')).lower() == 'true'
+
+     word_tokens = ['<s>']
+     word_tokens.extend(word_tokenize(input_text))
+
+     for word in word_tokens:
+          if word not in word_to_idx:
+               error_msg = 'Unknown vocabulary ' + word
+               return jsonify(status='error', message=error_msg)
+
+
+     if method == 'greedy':
+          result_tokens = prediction.predict_greedy(word_tokens,in_x,graph,model,word_to_idx,idx_to_word,wak_limit)
+     elif method == 'beam':
+          result_tokens = prediction.beam_search_decode(word_tokens, in_x, graph, model, word_to_idx, idx_to_word, in_x, 10, wak_limit, normalized=True)
+     result = prediction.format_output(result_tokens,wak_limit,isMobile)      
+     print(isMobile, result)
+     return jsonify(status='ok', message=result)
+     
 
 
 if __name__ == '__main__':
