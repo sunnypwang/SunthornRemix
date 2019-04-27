@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1.0"
+        />
+        <title>SunthornRemix</title>
+
+        <!-- CSS  -->
+        <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css?family=Kanit"
+            rel="stylesheet"
+        />
+        <link 
+            href="https://fonts.googleapis.com/css?family=Srisakdi" 
+            rel="stylesheet"
+        />
+        <link
+            href="{{ url_for('static', filename='css/materialize.css')}}"
+            type="text/css"
+            rel="stylesheet"
+            media="screen,projection"
+        />
+        <link
+            href="{{ url_for('static', filename='css/style.css')}}"
+            type="text/css"
+            rel="stylesheet"
+            media="screen,projection"
+        />
+        
+    </head>
+    <body>
+        <nav class="light-blue lighten-1" role="navigation">
+            <div class="nav-wrapper container">
+                <span id="logo-container" class="brand-logo">
+                    SunthornRemix
+                </span>
+            </div>
+        </nav>
+       
+        <div class="section no-pad-bot" id="index-banner">
+            <div class="container">
+                <br /><br />
+                <h3 class="header center thaitext orange-text">
+                    กรุณาใส่คำหรือวลีเริ่มต้นของวรรค
+                </h3>
+                <div class="row center">
+                    <input type="text" id="word" class="header col thaitext s12 light" value="ฝ่าย" />
+                </div>
+                <div class="center thaitext">
+                    <form action="#">
+                    <p>
+                      <label>
+                          ความยาว
+                      </label>
+                      <label>
+                        <input class="with-gap" name="wak" type="radio" value=1 checked />
+                        <span>๑ วรรค</span>
+                      </label>
+
+                      <label>
+                        <input class="with-gap" name="wak" type="radio" value=4 />
+                        <span>๑ บท</span>
+                      </label>
+                    </p>
+                    </form>
+                    <form action="#">
+                    <p>
+                      <label>
+                          รูปแบบอัลกอริทึม
+                      </label>
+                      <label>
+                        <input class="with-gap" name="method" type="radio" value="greedy" checked/>
+                        <span>Greedy</span>
+                      </label>
+
+                      <label>
+                        <input class="with-gap" name="method" type="radio" value="beam" />
+                        <span>Beam Search</span>
+                      </label>
+                    </p>
+                    </form>
+                    <form action="#">
+                    <p>
+                      <label>
+                          ลักษณะการประพันธ์
+                      </label>
+                     
+                      <label>
+                        <input class="with-gap" name="style" type="radio" value="sunthorn" checked/>
+                        <span>สุนทรภู่</span>
+                      </label>
+
+                      <label>
+                        <input class="with-gap" name="style" type="radio" value="mix" />
+                        <span>ผสมผสาน</span>
+                      </label>
+                    </p>
+                    </form>
+                </div>
+                <div class="center" >
+                    <button id="predict_btn" class="btn-large thaitext waves-effect waves-light orange" type="button">แต่ง</button>
+                </div>
+                <div id="prediction_wrapper" class="center" ><h5 id="prediction" class="thaitext curvy wak_space center"></h5></div>
+                <br /><br />
+            </div>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="{{ url_for('static', filename='js/materialize.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/init.js')}}"></script>
+        <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+    </body>
+</html>
