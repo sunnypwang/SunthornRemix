@@ -5,6 +5,7 @@ function predict(wak, method) {
             document
                 .getElementById('prediction_wrapper')
                 .classList.remove('loader')
+            console.log(this.responseText)
             if (this.responseText.status == 'ok') {
                 document.getElementById(
                     'prediction'
