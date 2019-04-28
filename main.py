@@ -58,7 +58,7 @@ def _predict():
             word_tokens, in_x, graph, model[style], word_to_idx[style], idx_to_word[style], temp, wak_limit)
     elif method == 'beam':
         result_tokens = prediction.beam_search_decode(
-            word_tokens, in_x, graph, model[style], word_to_idx[style], idx_to_word[style], in_x, 10, wak_limit, normalized=True)
+            word_tokens, in_x, graph, model[style], word_to_idx[style], idx_to_word[style], in_x, beam_size=5, wak_limit=wak_limit, normalized=True)
 
     result = prediction.format_output(result_tokens, wak_limit)
     print(result)
