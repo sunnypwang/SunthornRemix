@@ -17,8 +17,8 @@
             href="https://fonts.googleapis.com/css?family=Kanit"
             rel="stylesheet"
         />
-        <link 
-            href="https://fonts.googleapis.com/css?family=Srisakdi" 
+        <link
+            href="https://fonts.googleapis.com/css?family=Srisakdi"
             rel="stylesheet"
         />
         <link
@@ -33,7 +33,6 @@
             rel="stylesheet"
             media="screen,projection"
         />
-        
     </head>
     <body>
         <nav class="light-blue lighten-1" role="navigation">
@@ -43,7 +42,7 @@
                 </span>
             </div>
         </nav>
-       
+
         <div class="section no-pad-bot" id="index-banner">
             <div class="container">
                 <br /><br />
@@ -51,67 +50,144 @@
                     กรุณาใส่คำหรือวลีเริ่มต้นของวรรค
                 </h3>
                 <div class="row center">
-                    <input type="text" id="word" class="header col thaitext s12 light" value="ฝ่าย" />
+                    <input
+                        type="text"
+                        id="word"
+                        class="header col thaitext s12 light"
+                        pattern="[ก-๛\s]*"
+                        value="ฝ่าย"
+                    />
                 </div>
                 <div class="center thaitext">
                     <form action="#">
-                    <p>
-                      <label>
-                          ความยาว
-                      </label>
-                      <label>
-                        <input class="with-gap" name="wak" type="radio" value=1 checked />
-                        <span>๑ วรรค</span>
-                      </label>
+                        <p>
+                            <label>
+                                ความยาว
+                            </label>
+                            <label>
+                                <input
+                                    class="with-gap"
+                                    name="wak"
+                                    type="radio"
+                                    value="1"
+                                    checked
+                                />
+                                <span>๑ วรรค</span>
+                            </label>
 
-                      <label>
-                        <input class="with-gap" name="wak" type="radio" value=4 />
-                        <span>๑ บท</span>
-                      </label>
-                    </p>
+                            <label>
+                                <input
+                                    class="with-gap"
+                                    name="wak"
+                                    type="radio"
+                                    value="4"
+                                />
+                                <span>๑ บท</span>
+                            </label>
+                        </p>
                     </form>
                     <form action="#">
-                    <p>
-                      <label>
-                          รูปแบบอัลกอริทึม
-                      </label>
-                      <label>
-                        <input class="with-gap" name="method" type="radio" value="greedy" checked/>
-                        <span>Greedy</span>
-                      </label>
+                        <p>
+                            <label>
+                                รูปแบบอัลกอริทึม
+                            </label>
+                            <label>
+                                <input
+                                    class="with-gap"
+                                    name="method"
+                                    type="radio"
+                                    value="greedy"
+                                    onclick="hideTemp()"
+                                    checked
+                                />
+                                <span>Greedy</span>
+                            </label>
 
-                      <label>
-                        <input class="with-gap" name="method" type="radio" value="beam" />
-                        <span>Beam Search</span>
-                      </label>
-                    </p>
+                            <label>
+                                <input
+                                    class="with-gap"
+                                    name="method"
+                                    type="radio"
+                                    value="beam"
+                                    onclick="hideTemp()"
+                                />
+                                <span>Beam Search</span>
+                            </label>
+
+                            <label>
+                                <input
+                                    class="with-gap"
+                                    name="method"
+                                    type="radio"
+                                    value="temp"
+                                    onclick="showTemp()"
+                                />
+                                <span>Temperature Greedy</span>
+                            </label>
+                        </p>
                     </form>
                     <form action="#">
-                    <p>
-                      <label>
-                          ลักษณะการประพันธ์
-                      </label>
-                     
-                      <label>
-                        <input class="with-gap" name="style" type="radio" value="sunthorn" checked/>
-                        <span>สุนทรภู่</span>
-                      </label>
+                        <p class="range-field">
+                            <input
+                                type="range"
+                                id="tempRange"
+                                name="temp"
+                                min="0.5"
+                                max="3.0"
+                                step="0.5"
+                                value="1.0"
+                                class="hide"
+                            />
+                        </p>
+                    </form>
 
-                      <label>
-                        <input class="with-gap" name="style" type="radio" value="mix" />
-                        <span>ผสมผสาน</span>
-                      </label>
-                    </p>
+                    <form action="#">
+                        <p>
+                            <label>
+                                ลักษณะการประพันธ์
+                            </label>
+
+                            <label>
+                                <input
+                                    class="with-gap"
+                                    name="style"
+                                    type="radio"
+                                    value="sunthorn"
+                                    checked
+                                />
+                                <span>สุนทรภู่</span>
+                            </label>
+
+                            <label>
+                                <input
+                                    class="with-gap"
+                                    name="style"
+                                    type="radio"
+                                    value="mix"
+                                />
+                                <span>ผสมผสาน</span>
+                            </label>
+                        </p>
                     </form>
                 </div>
-                <div class="center" >
-                    <button id="predict_btn" class="btn-large thaitext waves-effect waves-light orange" type="button">แต่ง</button>
+                <div class="center">
+                    <button
+                        id="predict_btn"
+                        class="btn-large thaitext waves-effect waves-light orange"
+                        type="button"
+                    >
+                        แต่ง
+                    </button>
                 </div>
-                <div id="prediction_wrapper" class="center" ><h5 id="prediction" class="thaitext curvy wak_space center"></h5></div>
+                <div id="prediction_wrapper" class="center">
+                    <h5
+                        id="prediction"
+                        class="thaitext curvy wak_space center"
+                    ></h5>
+                </div>
                 <br /><br />
             </div>
         </div>
-
 
         <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="{{ url_for('static', filename='js/materialize.js')}}"></script>

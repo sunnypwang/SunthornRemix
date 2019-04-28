@@ -1,5 +1,9 @@
-function predict(method, style, wak) {
+function predict(method, style, temp, wak) {
     var xhttp = new XMLHttpRequest()
+
+    var isMobile = window.matchMedia('only screen and (max-width: 760px)')
+        .matches
+
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document
@@ -8,7 +12,14 @@ function predict(method, style, wak) {
             var res = JSON.parse(this.responseText)
             console.log(res)
             if (res.status == 'ok') {
-                document.getElementById('prediction').innerHTML = res.message
+                if (isMobile) {
+                    document.getElementById(
+                        'prediction'
+                    ).innerHTML = res.message.replace(' ', '<br>')
+                } else {
+                    document.getElementById('prediction').innerHTML =
+                        res.message
+                }
             } else if (res.status == 'error') {
                 alert(res.message)
             }
@@ -17,22 +28,31 @@ function predict(method, style, wak) {
             console.log(document.getElementById('word').value)
         }
     }
-    var isMobile = window.matchMedia('only screen and (max-width: 760px)')
-        .matches
 
     url =
-        'http://35.234.33.177:3000/predict?method=' +
+        'http://localhost:3000/predict?method=' +
         method +
         '&style=' +
         style +
+        '&temp=' +
+        temp +
         '&wak=' +
         wak +
         '&tok=' +
-        document.getElementById('word').value +
-        '&mobile=' +
-        isMobile
+        document.getElementById('word').value
     xhttp.open('GET', url, true)
     xhttp.send()
+}
+
+function hideTemp() {
+    // if (!document.getElementById('tempRange').classList.contains('hide')) {
+
+    // }
+    document.getElementById('tempRange').classList.add('hide')
+}
+
+function showTemp() {
+    document.getElementById('tempRange').classList.remove('hide')
 }
 
 document.getElementById('predict_btn').addEventListener(
@@ -44,9 +64,10 @@ document.getElementById('predict_btn').addEventListener(
 
         method = document.querySelector('input[name="method"]:checked').value
         style = document.querySelector('input[name="style"]:checked').value
+        temp = document.getElementById('tempRange').value
         wak = document.querySelector('input[name="wak"]:checked').value
 
-        predict(method, style, wak)
+        predict(method, style, temp, wak)
     },
     false
 )
