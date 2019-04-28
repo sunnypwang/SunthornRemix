@@ -2,6 +2,8 @@
 from keras.preprocessing.sequence import pad_sequences
 import numpy as np
 
+end_token = ['/', '</s>']
+
 
 def format_output(word_tokens, wak_limit):
     output_text = []
@@ -38,7 +40,7 @@ def predict_greedy(word_tokens, in_x, graph, model, word_to_idx, idx_to_word, wa
             probs.append(pred[output_idx])
             output_word = idx_to_word[output_idx]
 
-            if output_word == '/':
+            if output_word in end_token:
                 wak_count += 1
             if wak_count < wak_limit:
                 word_tokens.append(output_word)
@@ -73,7 +75,7 @@ def temperature_sampling_decode(word_tokens, in_x, graph, model, word_to_idx, id
             probs.append(pred[output_idx])
             output_word = idx_to_word[output_idx]
 
-            if output_word == '/':
+            if output_word in end_token:
                 wak_count += 1
             if wak_count < wak_limit:
                 word_tokens.append(output_word)
@@ -106,9 +108,9 @@ def beam_search_decode(seed_tokens, max_gen_len, graph, model, word_to_index, in
             tmp_beams = beams.copy()
             beams = []
             for beam in tmp_beams:
-                if(beam[0][-1] == "</s>"):
-                    beams.append(beam)
-                    continue
+                # if(beam[0][-1] == "</s>"):
+                #     beams.append(beam)
+                #     continue
 
                 if(beam[3] >= wak_limit):
                     beams.append(beam)
@@ -125,7 +127,7 @@ def beam_search_decode(seed_tokens, max_gen_len, graph, model, word_to_index, in
                     tmp_beam_0 = beam[0] + [index_to_word[top_beam_idx[i]]]
                     tmp_beam_1 = beam[1] + [top_beam_values[i]]
                     tmp_beam_2 = beam[2] + 1
-                    if index_to_word[top_beam_idx[i]] == '/':
+                    if index_to_word[top_beam_idx[i]] in end_token:
                         tmp_beam_3 = beam[3] + 1
                     else:
                         tmp_beam_3 = beam[3]
