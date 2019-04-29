@@ -15,7 +15,7 @@ function predict(method, style, temp, wak) {
                 if (isMobile) {
                     document.getElementById(
                         'prediction'
-                    ).innerHTML = res.message.replace(' ', '<br>')
+                    ).innerHTML = res.message.replace(/ /g, '<br>')
                 } else {
                     document.getElementById('prediction').innerHTML =
                         res.message
