@@ -45,9 +45,6 @@ function predict(method, style, temp, wak) {
 }
 
 function hideTemp() {
-    // if (!document.getElementById('tempRange').classList.contains('hide')) {
-
-    // }
     document.getElementById('tempRange').classList.add('hide')
 }
 
