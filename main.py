@@ -20,12 +20,12 @@ graph = tf.get_default_graph()
 word_to_idx = dict()
 idx_to_word = dict()
 
-word_to_idx['sunthorn'] = pickle.load(open('res/word_to_idx_sun.p', 'rb'))
-word_to_idx['mix'] = pickle.load(open('res/word_to_idx.p', 'rb'))
-idx_to_word['sunthorn'] = pickle.load(open('res/idx_to_word_sun.p', 'rb'))
-idx_to_word['mix'] = pickle.load(open('res/idx_to_word.p', 'rb'))
+word_to_idx['sunthorn'] = pickle.load(open('dict/word_to_idx_sun.p', 'rb'))
+word_to_idx['mix'] = pickle.load(open('dict/word_to_idx.p', 'rb'))
+idx_to_word['sunthorn'] = pickle.load(open('dict/idx_to_word_sun.p', 'rb'))
+idx_to_word['mix'] = pickle.load(open('dict/idx_to_word.p', 'rb'))
 
-in_x = 44
+maxlen = 44
 
 
 @app.route('/')
@@ -52,13 +52,13 @@ def _predict():
 
     if method == 'greedy':
         result_tokens = prediction.predict_greedy(
-            word_tokens, in_x, graph, model[style], word_to_idx[style], idx_to_word[style], wak_limit)
+            word_tokens, maxlen, graph, model[style], word_to_idx[style], idx_to_word[style], wak_limit)
     elif method == 'temp':
         result_tokens = prediction.temperature_sampling_decode(
-            word_tokens, in_x, graph, model[style], word_to_idx[style], idx_to_word[style], temp, wak_limit)
+            word_tokens, maxlen, graph, model[style], word_to_idx[style], idx_to_word[style], temp, wak_limit)
     elif method == 'beam':
         result_tokens = prediction.beam_search_decode(
-            word_tokens, in_x, graph, model[style], word_to_idx[style], idx_to_word[style], in_x, beam_size=5, wak_limit=wak_limit, normalized=True)
+            word_tokens, maxlen, graph, model[style], word_to_idx[style], idx_to_word[style], maxlen, beam_size=5, wak_limit=wak_limit, normalized=True)
 
     result = prediction.format_output(result_tokens, wak_limit)
     print(result)
